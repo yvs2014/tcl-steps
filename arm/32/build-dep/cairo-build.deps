@@ -1,0 +1,2 @@
+compiletc automake autoconf cmake meson squashfs-tools
+glib2-dev pango-dev cargo-dev harfbuzz-dev

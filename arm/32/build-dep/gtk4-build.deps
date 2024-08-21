@@ -1,0 +1,7 @@
+compiletc automake autoconf cmake meson squashfs-tools git
+glib2-dev pango-1.54.0 cairo-1.18.0 gdk-pixbuf-dev libepoxy-dev graphene-dev
+gst-plugins-bad-dev bash librsvg-dev
+gettext-dev intltool-dev shared-mime-info-dev libxkbcommon-dev iso-codes gobject-introspection-dev
+wayland-dev wayland-protocols libXrandr-dev xrandr libXi-dev libXcursor-dev libXinerama-dev
+mesa-vulkan-rpi4
+? libvulkan-dev

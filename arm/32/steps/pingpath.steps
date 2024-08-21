@@ -1,0 +1,32 @@
+:
+
+set -e
+
+NAME="pingpath"
+DST="dest.$NAME"
+TCZ="$NAME.tcz"
+DEP="$TCZ.dep"
+
+tce-load -i gtk4
+tce-load -wil git compiletc autoconf automake squashfs-tools pkg-config
+tce-load -i cglm
+#tce-load -wil gtk4-dev
+#tce-load -wil libXcursor-dev
+#tce-load -wil libXcomposite-dev
+#tce-load -wil libXinerama-dev
+
+cd /tmp && git clone "https://github.com/yvs2014/$NAME"
+cd "$NAME"
+sed -i 's,"/bin/ping","/usr/local/bin/ping",' pinger.c
+sed -i '/ln -srf/d' Makefile
+sed -i 's/install -T -m/install -m/' Makefile
+make
+sudo make "DESTDIR=/tmp/$DST" install
+cd ..
+mksquashfs "$DST" "$TCZ"
+
+echo gtk4.tcz >"$DEP"
+echo gsettings-desktop-schemas.tcz >>"$DEP"
+echo cglm.tcz >>"$DEP"
+echo iputils-ping.tcz >>"$DEP"
+

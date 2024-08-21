@@ -1,0 +1,2 @@
+compiletc automake autoconf cmake squashfs-tools
+libX11-dev libxcb-dev libXau-dev libXdmcp-dev

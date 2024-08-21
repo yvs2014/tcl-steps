@@ -1,0 +1,33 @@
+:
+
+set -e
+
+NAME="xterm"
+TCZ="$NAME.tcz"
+DEP="$TCZ.dep"
+DST="dest.$NAME"
+VERNO="393"
+VER="$NAME-$VERNO"
+ARC="$VER.tgz"
+
+tce-load -wil wget sed compiletc pkg-config Xlibs libXaw-dev ncurses-dev squashfs-tools
+
+cd /tmp && wget "https://invisible-island.net/archives/$NAME/$ARC"
+tar xvzf "$ARC" && cd "$VER"
+
+sed -i 's,ncurses/curses.h,ncursesw/curses.h,' configure *.h *.hin
+sed -i 's,ncurses/term.h,ncursesw/term.h,' configure *.h *.hin
+sed -i 's,HAVE_NCURSES_CURSES_H,HAVE_NCURSESW_CURSES_H,' *.h *.hin
+sed -i 's,HAVE_NCURSES_TERM_H,HAVE_NCURSESW_TERM_H,' *.h *.hin
+
+./configure
+export CPPFLAGS=`pkg-config --cflags ncursesw`
+export LDFLAGS=`pkg-config --libs ncursesw`
+make
+sudo make DESTDIR="/tmp/$DST" install
+cd ..
+mksquashfs "$DST" "$TCZ"
+echo ncurses.tcz >>"$DEP"
+echo Xlibs.tcz >"$DEP"
+echo libXaw.tcz >>"$DEP"
+

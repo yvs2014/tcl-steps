@@ -1,0 +1,19 @@
+:
+
+set -e
+
+NAME="cglm"
+VER="0.9.4"
+ARC="v$VER.tar.gz"
+DST="dest.$NAME"
+
+tce-load -wil git compiletc autoconf automake cmake squashfs-tools
+
+cd /tmp && wget "https://github.com/recp/$NAME/archive/refs/tags/$ARC"
+tar xvzf "$ARC" && cd "$NAME-$VER"
+mkdir build && cd build
+cmake .. && make
+sudo make DESTDIR="/tmp/$DST" install
+cd ../..
+mksquashfs "$DST" "$NAME.tcz"
+

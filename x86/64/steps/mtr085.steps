@@ -1,0 +1,22 @@
+:
+
+set -e
+
+NAME="mtr085"
+TCZ="$NAME.tcz"
+DST="dest.$NAME"
+
+tce-load -wil git compiletc autoconf automake libcap ncursesw-dev squashfs-tools
+
+cd /tmp
+git clone "https://github.com/yvs2014/$NAME" #--depth=1
+cd "$NAME"
+export LANG=C
+autoreconf -fi
+./configure --disable-ipv6
+make
+sudo make DESTDIR="/tmp/$DST" install
+cd ..
+mksquashfs "$DST" "$TCZ" -xattrs
+echo ncursesw.tcz >"$TCZ.dep"
+

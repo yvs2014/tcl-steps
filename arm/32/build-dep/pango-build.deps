@@ -1,0 +1,2 @@
+compiletc automake autoconf cmake meson squashfs-tools git
+cairo-1.18.0 fontconfig-dev freetype-dev fribidi-dev harfbuzz-dev glib2-dev

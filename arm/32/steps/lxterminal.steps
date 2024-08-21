@@ -1,0 +1,34 @@
+:
+
+set -e
+
+NAME="lxterminal"
+CAP="LXTerminal"
+TCZ="$NAME.tcz"
+DEP="$TCZ.dep"
+DST="dest.$NAME"
+VERNO="0.4.0"
+VER="$NAME-$VERNO"
+ARC="$VER.tar.xz"
+
+tce-load -i wget compiletc libtool intltool gettext-dev autoconf-archive autoconf automake xz vte-dev gnutls-dev gtk3-dev ncurses-dev squashfs-tools
+
+cd /tmp && wget "https://sourceforge.net/projects/lxde/files/${CAP}%20%28terminal%20emulator%29/${CAP}%200.4.x/$ARC"
+tar xvJf "$ARC" && cd "$VER"
+
+export LANG=C
+autoreconf -fi
+./configure --enable-gtk3
+make
+sudo make DESTDIR="/tmp/$DST" install
+cd ..
+mksquashfs "$DST" "$TCZ"
+tce-load -wil wget sed compiletc pkg-config Xlibs libXaw-dev ncurses-dev squashfs-tools
+echo Xlibs.tcz >>"$DEP"
+echo libXaw.tcz >"$DEP"
+echo gtk3.tcz >"$DEP"
+echo ncurses.tcz >>"$DEP"
+echo gettext.tcz >>"$DEP"
+echo vte.tcz >>"$DEP"
+echo gnutls.tcz >>"$DEP"
+
