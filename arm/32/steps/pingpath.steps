@@ -29,4 +29,5 @@ echo gtk4.tcz >"$DEP"
 echo gsettings-desktop-schemas.tcz >>"$DEP"
 echo cglm.tcz >>"$DEP"
 echo iputils-ping.tcz >>"$DEP"
+echo json-glib.tcz >>"$DEP"
 
