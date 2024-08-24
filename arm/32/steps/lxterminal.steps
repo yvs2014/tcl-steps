@@ -4,31 +4,25 @@ set -e
 
 NAME="lxterminal"
 CAP="LXTerminal"
-TCZ="$NAME.tcz"
-DEP="$TCZ.dep"
-DST="dest.$NAME"
-VERNO="0.4.0"
-VER="$NAME-$VERNO"
-ARC="$VER.tar.xz"
+VER="0.4.0"
 
-tce-load -i wget compiletc libtool intltool gettext-dev autoconf-archive autoconf automake xz vte-dev gnutls-dev gtk3-dev ncurses-dev squashfs-tools
+. ./func1.inc
 
-cd /tmp && wget "https://sourceforge.net/projects/lxde/files/${CAP}%20%28terminal%20emulator%29/${CAP}%200.4.x/$ARC"
-tar xvJf "$ARC" && cd "$VER"
+NV2="$NAME-$VER"
+ARC="$NV2.tar.xz"
+TAR_OPTS="xvJf"
+BUILD_DEPS="libtool intltool-dev gettext-dev autoconf-archive autoconf automake xz vte-dev gnutls-dev gtk3-dev ncurses-dev shared-mime-info"
+RUN_DEPS="Xlibs libXaw gtk3 ncurses gettext vte gnutls shared-mime-info intltool"
+
+std_build
+top_n_clean
+prep_gh_arc "https://sourceforge.net/projects/lxde/files/${CAP}%20%28terminal%20emulator%29/${CAP}%200.4.x/$ARC"
 
 export LANG=C
 autoreconf -fi
 ./configure --enable-gtk3
 make
-sudo make DESTDIR="/tmp/$DST" install
-cd ..
-mksquashfs "$DST" "$TCZ"
-tce-load -wil wget sed compiletc pkg-config Xlibs libXaw-dev ncurses-dev squashfs-tools
-echo Xlibs.tcz >>"$DEP"
-echo libXaw.tcz >"$DEP"
-echo gtk3.tcz >"$DEP"
-echo ncurses.tcz >>"$DEP"
-echo gettext.tcz >>"$DEP"
-echo vte.tcz >>"$DEP"
-echo gnutls.tcz >>"$DEP"
+make DESTDIR="/tmp/$DST" install
+
+mk_tcz
 

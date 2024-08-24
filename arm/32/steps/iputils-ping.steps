@@ -3,26 +3,29 @@
 set -e
 
 NAME="iputils-ping"
-TCZ="$NAME.tcz"
-DEP="$TCZ.dep"
-DST="dest.$NAME"
-GHNAME="iputils"
+GH_USER="iputils"
 VERNO="20240117"
-VER="$GHNAME-$VERNO"
+VER="$GH_USER-$VERNO"
+
+. ./func1.inc
+
+NV2="$VER"
 ARC="$VER.tar.gz"
+SQUASHFS_OPTS="-xattrs"
+BUILD_DEPS="autoconf automake pkg-config meson libxslt-dev docbook_xsl libcap-dev gettext-dev libidn2-dev libunistring-dev"
+RUN_DEPS="libcap libidn2 libunistring"
 
-tce-load -wil git compiletc autoconf automake pkg-config cmake meson libxslt-dev docbook_xsl libcap-dev gettext-dev libidn2-dev libunistring-dev squashfs-tools
+std_build
+top_n_clean
+prep_gh_arc "https://github.com/$GH_USER/$GH_USER/releases/download/$VERNO/$ARC"
 
-cd /tmp && wget "https://github.com/$GHNAME/$GHNAME/releases/download/$VERNO/$ARC"
-tar xvzf "$ARC" && cd "$VER"
 meson setup _build
 meson compile -C _build
-sudo meson install -C _build --destdir "/tmp/$DST"
+meson install -C _build --destdir "/tmp/$DST"
 cd ..
 sudo setcap cap_net_raw=+ep "$DST/usr/local/bin/ping"
 sudo setcap cap_net_raw=+ep "$DST/usr/local/bin/arping"
-mksquashfs "$DST" "$TCZ" -xattrs
-echo libcap.tcz >"$DEP"
-echo libidn2.tcz >>"$DEP"
-echo libunistring.tcz >>"$DEP"
+
+mk_tcz
+sudo rm -rf "$DST"
 

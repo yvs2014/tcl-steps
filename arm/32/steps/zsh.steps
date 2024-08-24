@@ -3,23 +3,24 @@
 set -e
 
 NAME="zsh"
-VERSION="5.9"
-TCZ="$NAME.tcz"
-DST="dest.$NAME"
-FULLNAME="$NAME-$VERSION"
-ARCHIVE="$FULLNAME.tar.xz"
-LOCATION="ftp://ftp.$NAME.org/$NAME"
+VER="5.9"
 
-tce-load -wil compiletc wget ncurses-dev squashfs-tools
+. ./func1.inc
 
-cd /tmp
-wget "$LOCATION/$ARCHIVE"
-tar xvJf "$ARCHIVE"
-cd "$FULLNAME"
+NV2="$NAME-$VER"
+ARC="$NV2.tar.xz"
+TAR_OPTS="xvJf"
+
+RUN_DEPS="ncurses"
+BUILD_DEPS="ncurses-dev"
+
+std_build
+top_n_clean
+prep_gh_arc "ftp://ftp.$NAME.org/$NAME/$ARC"
+
 ./configure
 make
-sudo make DESTDIR="/tmp/$DST" install
-cd ..
-mksquashfs "$DST" "$TCZ" -xattrs
-echo ncurses.tcz >"$TCZ.dep"
+make DESTDIR="/tmp/$DST" install
+
+mk_tcz
 

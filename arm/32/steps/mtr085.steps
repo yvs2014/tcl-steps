@@ -3,26 +3,25 @@
 set -e
 
 NAME="mtr085"
-TCZ="$NAME.tcz"
-DST="dest.$NAME"
+VER="0.85.154"
+GH_USER="yvs2014"
 
-tce-load -wil git
-tce-load -wil compiletc
-tce-load -wil autoconf
-tce-load -wil automake
-tce-load -wil libcap
-tce-load -wil ncurses
-tce-load -wil ncurses-dev
-tce-load -wil squashfs-tools
+. ./func1.inc
 
-cd /tmp
-git clone "https://github.com/yvs2014/$NAME" #--depth=1
-cd "$NAME"
+RUN_DEPS="ncurses libidn2"
+BUILD_DEPS="autoconf automake libcap-dev ncurses-dev libidn2-dev"
+
+std_build
+top_n_clean
+prep_gh_git
+
 autoreconf -fi
-./configure --disable-ipv6
+./configure --disable-ipv6 --with-libidn
 make
 sudo make DESTDIR="/tmp/$DST" install
 cd ..
 mksquashfs "$DST" "$TCZ" -xattrs
-echo ncurses.tcz >"$TCZ.dep"
+
+mk_tcz
+sudo rm -rf "$DST"
 
