@@ -1,0 +1,114 @@
+
+test "x$NOT_FOR" != "x" && {
+  _arch=$(uname -m)
+  for a in $NOT_FOR; do
+    test "$a" = "$_arch" && {
+      echo "This package is not for $a"
+      test "x$NOT_FOR_MESSAGE" != "x" && echo "$NOT_FOR_MESSAGE"
+      exit 1
+    }
+  done
+}
+
+NV="$NAME-$VER"
+NV2=
+
+test -z "$ARC" && ARC="v$VER.tar.gz"
+test "x$TCZ_NAME_SFX" = "x" && TCZ_NAME_SFX=
+
+DST="dest.$NV"
+EXTDIR="/mnt/`cat /etc/sysconfig/backup_device`/optional"
+TCZ="$NAME$TCZ_NAME_SFX.tcz"
+test -n "$TCZ_NAME_SFX" && TCZNV="$NAME$TCZ_NAME_SFX-$VER.tcz" || TCZNV="$NV.tcz"
+DEP="$TCZ.dep"
+BUILD_DEPS=
+RUN_DEPS=
+SQUASHFS_OPTS=
+TAR_OPTS=
+
+TOPBLD="/tmp"
+
+GH="https://github.com"
+
+_TCEL_OPTS="-wil"
+
+tce_load() {
+  test $# -gt 0 && tce-load $_TCEL_OPTS $@ || :
+}
+
+std_build() {
+  tce_load squashfs-tools git wget compiletc $BUILD_DEPS
+  case "$(uname -m)" in
+    x86_64)
+      tce_load $BUILD_DEPS_x86_64
+      ;;
+    i686)
+      tce_load $BUILD_DEPS_i686
+      ;;
+    aarch64)
+      tce_load $BUILD_DEPS_aarch64
+      ;;
+    armv7l)
+      tce_load $BUILD_DEPS_armv7l
+      ;;
+  esac
+}
+
+prep_gh_arc() {
+  [ -n "$TAR_OPTS" ] && _tar_opts="$TAR_OPTS" || _tar_opts="xvzf"
+  [ -n "$NV2" ] && _nv="$NV2" || _nv="$NV"
+  [ -n "$1" ] && { _arc="$1"; shift; } || _arc="$GH/$GH_USER/$NAME/archive/refs/tags/$ARC"
+  cd $TOPBLD
+  wget "$_arc"
+  tar $_tar_opts "$ARC"
+  cd "$_nv"
+}
+
+prep_gh_git() {
+  [ -n "$1" ] && { _git="$1"; shift; } || _git="$GH/$GH_USER/$NAME"
+  cd $TOPBLD
+  git clone "$_git"
+  cd "$NAME"
+}
+
+
+top_n_clean() {
+  cd $TOPBLD
+  rm -rf "$DST" "$NV" "$NV2" "$NAME" 2>/dev/null || :
+  rm -f "$ARC" "$TCZ" "$TCZNV" "$DEP" 2>/dev/null || :
+}
+
+write_deps() {
+  test $# -le 0 && return
+  for f in $@; do
+    echo "$f.tcz"
+  done >> "$DEP"
+}
+
+mk_tcz() {
+  cd "$TOPBLD"
+  mksquashfs "$DST" "$TCZNV" $SQUASHFS_OPTS || \
+  { test -n "$SQUASHFS_OPTS" && mksquashfs "$DST" "$TCZNV"; }
+  ln -sf "$TCZNV" "$TCZ"
+  [ -n "$RUN_DEPS" ] && write_deps $RUN_DEPS
+  case "$(uname -m)" in
+    x86_64)
+      write_deps $RUN_DEPS_x86_64
+      ;;
+    i686)
+      write_deps $RUN_DEPS_i686
+      ;;
+    aarch64)
+      write_deps $RUN_DEPS_aarch64
+      ;;
+    armv7l)
+      write_deps $RUN_DEPS_armv7l
+      ;;
+  esac
+  test -d "$EXTDIR" && {
+    mv "$TCZ" "$TCZNV" "$EXTDIR"/
+    [ -f "$DEP" ] && mv "$DEP" "$EXTDIR"/ || :
+    top_n_clean || :
+  } || ls -l "$TCZ" "$TCZNV"
+}
+

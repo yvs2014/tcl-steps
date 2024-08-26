@@ -6,7 +6,9 @@ NAME="cglm"
 VER="0.9.4"
 GH_USER="recp"
 
-. ./func1.inc
+. "$(dirname $0)/steps.common"
+
+BUILD_DEPS="cmake"
 
 std_build
 top_n_clean

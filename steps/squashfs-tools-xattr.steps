@@ -1,0 +1,26 @@
+:
+
+set -e
+
+NAME="squashfs-tools"
+GH_USER="plougher"
+VER="4.6.1"
+ARC="$VER.tar.gz"
+TCZ_NAME_SFX="-xattr"
+NOT_FOR="x86_64 armv7l aarch64"
+NOT_FOR_MESSAGE="$NAME with 'xattr' support is already present in distributive repo"
+
+. "$(dirname $0)/steps.common"
+
+NV2="$NAME-$VER/$NAME"
+
+std_build
+top_n_clean
+prep_gh_arc "https://github.com/plougher/$NAME/archive/refs/tags/$VER.tar.gz"
+
+make
+_dst="/tmp/$DST/usr/local"
+make "INSTALL_DIR=$_dst/bin" "INSTALL_MANPAGES_DIR=$_dst/share/man/man1" USE_PREBUILT_MANPAGES=y install
+
+mk_tcz
+

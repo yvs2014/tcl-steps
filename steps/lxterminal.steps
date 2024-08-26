@@ -5,8 +5,10 @@ set -e
 NAME="lxterminal"
 CAP="LXTerminal"
 VER="0.4.0"
+NOT_FOR="x86_64 i686 aarch64"
+NOT_FOR_MESSAGE="$NAME extension is already present in distributive repo"
 
-. ./func1.inc
+. "$(dirname $0)/steps.common"
 
 NV2="$NAME-$VER"
 ARC="$NV2.tar.xz"

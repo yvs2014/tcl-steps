@@ -7,12 +7,12 @@ GH_USER="iputils"
 VERNO="20240117"
 VER="$GH_USER-$VERNO"
 
-. ./func1.inc
+. "$(dirname $0)/steps.common"
 
 NV2="$VER"
 ARC="$VER.tar.gz"
 SQUASHFS_OPTS="-xattrs"
-BUILD_DEPS="autoconf automake pkg-config meson libxslt-dev docbook_xsl libcap-dev gettext-dev libidn2-dev libunistring-dev"
+BUILD_DEPS="autoconf automake pkg-config meson cmake libxslt-dev docbook_xsl libcap-dev gettext-dev libidn2-dev libunistring-dev"
 RUN_DEPS="libcap libidn2 libunistring"
 
 std_build

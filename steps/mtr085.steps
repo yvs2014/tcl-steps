@@ -1,0 +1,36 @@
+:
+
+set -e
+
+NAME="mtr085"
+VER="0.85.154"
+GH_USER="yvs2014"
+
+. "$(dirname $0)/steps.common"
+
+SQUASHFS_OPTS="-xattrs"
+
+RUN_DEPS="libidn2"
+RUN_DEPS_x86_64="ncursesw"
+RUN_DEPS_i686="ncursesw"
+RUN_DEPS_aarch64="ncurses"
+RUN_DEPS_armv7l="ncurses"
+
+BUILD_DEPS="autoconf automake libcap-dev libidn2-dev"
+BUILD_DEPS_x86_64="ncursesw-dev"
+BUILD_DEPS_i686="ncursesw-dev"
+BUILD_DEPS_aarch64="ncurses-dev"
+BUILD_DEPS_armv7l="ncurses-dev"
+
+std_build
+top_n_clean
+prep_gh_git
+
+autoreconf -fi
+./configure --disable-ipv6 --with-libidn
+make
+sudo make DESTDIR="/tmp/$DST" install
+
+mk_tcz
+sudo rm -rf "$DST"
+

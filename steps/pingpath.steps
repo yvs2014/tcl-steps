@@ -5,12 +5,13 @@ set -e
 NAME="pingpath"
 VER="0.3.18"
 GH_USER="yvs2014"
+NOT_FOR="i686"
 
-. ./func1.inc
+. "$(dirname $0)/steps.common"
 
-RUN_DEPS="iputils-ping gtk4 gsettings-desktop-schemas json-glib"
-BUILD_DEPS="autoconf automake pkg-config cglm gtk4-dev json-glib-dev"
-tce-load -i cglm
+RUN_DEPS="iputils-ping cglm gtk4 gsettings-desktop-schemas json-glib"
+BUILD_DEPS="autoconf automake pkg-config gtk4-dev json-glib-dev"
+tce-load -i cglm # it's not present in distributive repo
 
 std_build
 top_n_clean
