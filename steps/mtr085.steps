@@ -22,6 +22,8 @@ BUILD_DEPS_i686="ncursesw-dev"
 BUILD_DEPS_aarch64="ncurses-dev"
 BUILD_DEPS_armv7l="ncurses-dev"
 
+test "x$(uname -m)" = "xi686" && tce-load -i squashfs-tools-xattr
+
 std_build
 top_n_clean
 prep_gh_git
