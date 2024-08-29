@@ -1,0 +1,19 @@
+:
+
+# Use: $0 >/etc/sysconfig/tcedir/not_found.aux
+
+set -e
+
+[ $# -eq 0 ] && set -- "/tmp/tcloop"
+
+while [ $# -gt 0 ]; do
+  loopdir="$1"; shift
+  cd "$loopdir" || continue
+  for ext in *; do
+    test -d "$ext" || continue
+    bins=$(ls -l /usr/local/bin | grep "/tmp/tcloop/$ext" | grep bin/ | sed 's,.* -> /tmp/tcloop/.*/[s]*bin/\(.*\),\1,' | tr '\n' '/')
+    test -n "$bins" && echo "$ext /$bins" || echo "ext 'NOTE: $ext' doesn't contain bins" >&2
+  done
+  cd - >/dev/null
+done
+

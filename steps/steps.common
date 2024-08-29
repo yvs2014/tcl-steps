@@ -17,7 +17,7 @@ test -z "$ARC" && ARC="v$VER.tar.gz"
 test "x$TCZ_NAME_SFX" = "x" && TCZ_NAME_SFX=
 
 DST="dest.$NV"
-EXTDIR="/mnt/`cat /etc/sysconfig/backup_device`/optional"
+EXTDIR="/etc/sysconfig/tcedir/optional"
 TCZ="$NAME$TCZ_NAME_SFX.tcz"
 test -n "$TCZ_NAME_SFX" && TCZNV="$NAME$TCZ_NAME_SFX-$VER.tcz" || TCZNV="$NV.tcz"
 DEP="$TCZ.dep"
