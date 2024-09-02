@@ -1,6 +1,8 @@
 :
 
-# Use: $0 >/etc/sysconfig/tcedir/not_found.aux
+# collect bin/ list of mounted TC extensions
+#
+# Use: $0 >/etc/sysconfig/tcedir/not_found.aux.$(uname -m)
 
 set -e
 
@@ -12,7 +14,7 @@ while [ $# -gt 0 ]; do
   for ext in *; do
     test -d "$ext" || continue
     bins=$(ls -l /usr/local/bin | grep "/tmp/tcloop/$ext" | grep bin/ | sed 's,.* -> /tmp/tcloop/.*/[s]*bin/\(.*\),\1,' | tr '\n' '/')
-    test -n "$bins" && echo "$ext /$bins" || echo "ext 'NOTE: $ext' doesn't contain bins" >&2
+    test -n "$bins" && echo "$ext /$bins" || echo "ext 'NOTE: $ext' doesn't contain bin/ files" >&2
   done
   cd - >/dev/null
 done
