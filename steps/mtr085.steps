@@ -29,7 +29,7 @@ top_n_clean
 prep_gh_git
 
 autoreconf -fi
-./configure --disable-ipv6 --with-libidn
+./configure --with-libidn
 make
 sudo make DESTDIR="/tmp/$DST" install
 

@@ -3,7 +3,7 @@
 set -e
 
 NAME="pingpath"
-VER="0.3.19"
+VER="0.3.20"
 GH_USER="yvs2014"
 NOT_FOR="i686"
 
