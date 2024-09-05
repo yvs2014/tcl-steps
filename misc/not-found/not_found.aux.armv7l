@@ -109,7 +109,7 @@ man-db /apropos/catman/lexgrog/man/man-recode/mandb/manpath/whatis/
 meson /meson/
 mtdev /mtdev-test/
 mtr085 /mtr/
-mtr085-0.85.155 /mtr/
+mtr085-0.85.157 /mtr/
 ncurses /captoinfo/clear/infocmp/infotocap/ncursesw6-config/reset/tabs/tic/toe/tput/tset/
 ncurses-utils /captoinfo/clear/infocmp/infotocap/ncursesw6-config/reset/tabs/tic/toe/tput/tset/
 neon /neon-config/
@@ -127,7 +127,7 @@ pcre2 /pcre2-config/pcre2grep/pcre2test/
 pcre2-dev /pcre2-config/
 perl5 /corelist/cpan/enc2xs/encguess/h2ph/h2xs/instmodsh/json_pp/libnetcfg/perl/perlbug/perldoc/perlivp/perlthanks/piconv/pl2pm/pod2html/pod2man/pod2text/pod2usage/podchecker/prove/ptar/ptardiff/ptargrep/shasum/splain/streamzip/xsubpp/zipdetails/
 pingpath /pingpath/pingpath2/
-pingpath-0.3.19 /pingpath/pingpath2/
+pingpath-0.3.20 /pingpath/pingpath2/
 pkg-config /pkg-config/
 python3.11 /pip/pip3/pip3.11/wheel/
 python3.11-pip /pip/pip3/pip3.11/

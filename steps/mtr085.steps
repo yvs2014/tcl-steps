@@ -3,14 +3,14 @@
 set -e
 
 NAME="mtr085"
-VER="0.85.156"
+VER="0.85.157"
 GH_USER="yvs2014"
 
 . "$(dirname $0)/steps.common"
 
 SQUASHFS_OPTS="-xattrs"
 
-RUN_DEPS="libidn2"
+RUN_DEPS="libidn2 libcap"
 RUN_DEPS_x86_64="ncursesw"
 RUN_DEPS_i686="ncursesw"
 RUN_DEPS_aarch64="ncurses"

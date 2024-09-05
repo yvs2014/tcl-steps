@@ -376,7 +376,7 @@ mononoki-ttf-fonts.tcz
 mpc.tcz
 mpfr.tcz
 mtdev.tcz
-mtr085-0.85.155.tcz
+mtr085-0.85.157.tcz
 mtr085.tcz
 mylocale.tcz
 ncursesw-dev.tcz
@@ -414,7 +414,7 @@ pcre2-dev.tcz
 pcre2.tcz
 perl5.tcz
 perl_xml_parser.tcz
-pingpath-0.3.19.tcz
+pingpath-0.3.20.tcz
 pingpath.tcz
 pixman-dev.tcz
 pixman.tcz

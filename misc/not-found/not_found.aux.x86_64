@@ -129,7 +129,7 @@ mesa-demos /arbfplight/arbfslight/arbocclude/arbocclude2/array/bezier/bitmap/bli
 meson /meson/
 mtdev /mtdev-test/
 mtr085 /mtr/
-mtr085-0.85.155 /mtr/
+mtr085-0.85.157 /mtr/
 ncursesw /ncursesw6-config/
 ncursesw-dev /ncursesw6-config/
 neofetch /neofetch/
@@ -153,7 +153,7 @@ pcre21042 /pcre2-config/pcre2grep/pcre2test/
 pcre21042-dev /pcre2-config/
 perl5 /corelist/cpan/enc2xs/encguess/h2ph/h2xs/instmodsh/json_pp/libnetcfg/perl/perl5.36.0/perlbug/perldoc/perlivp/perlthanks/piconv/pl2pm/pod2html/pod2man/pod2text/pod2usage/podchecker/prove/ptar/ptardiff/ptargrep/shasum/splain/streamzip/xsubpp/zipdetails/
 pingpath /pingpath/pingpath2/
-pingpath-0.3.19 /pingpath/pingpath2/
+pingpath-0.3.20 /pingpath/pingpath2/
 pkg-config /pkg-config/
 polkit /pk-example-frobnicate/pkaction/pkcheck/pkexec/pkttyagent/
 qpdf /fix-qdf/qpdf/zlib-flate/
