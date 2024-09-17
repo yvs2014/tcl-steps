@@ -3,7 +3,7 @@
 set -e
 
 NAME="mtr085"
-VER="0.85.157"
+VER="0.85"
 GH_USER="yvs2014"
 
 . "$(dirname $0)/steps.common"
@@ -16,22 +16,19 @@ RUN_DEPS_i686="ncursesw"
 RUN_DEPS_aarch64="ncurses"
 RUN_DEPS_armv7l="ncurses"
 
-BUILD_DEPS="autoconf automake libcap-dev libidn2-dev"
+BUILD_DEPS="cmake libcap-dev libidn2-dev"
 BUILD_DEPS_x86_64="ncursesw-dev"
 BUILD_DEPS_i686="ncursesw-dev"
 BUILD_DEPS_aarch64="ncurses-dev"
 BUILD_DEPS_armv7l="ncurses-dev"
 
-test "x$(uname -m)" = "xi686" && tce-load -i squashfs-tools-xattr
-
 std_build
 top_n_clean
 prep_gh_git
 
-autoreconf -fi
-./configure --with-libidn
-make
-sudo make DESTDIR="/tmp/$DST" install
+cmake -B _build -S $(pwd)
+cmake --build _build
+sudo DESTDIR=/tmp/$DST cmake --install _build --strip
 
 mk_tcz
 sudo rm -rf "$DST"

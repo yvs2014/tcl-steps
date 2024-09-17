@@ -3,14 +3,14 @@
 set -e
 
 NAME="pingpath"
-VER="0.3.22"
+VER="0.3"
 GH_USER="yvs2014"
 NOT_FOR="i686"
 
 . "$(dirname $0)/steps.common"
 
 RUN_DEPS="iputils-ping cglm gtk4 gsettings-desktop-schemas json-glib"
-BUILD_DEPS="cmake autoconf automake pkg-config gtk4-dev json-glib-dev"
+BUILD_DEPS="cmake pkg-config gtk4-dev json-glib-dev"
 tce-load -i cglm # it's not present in distributive repo
 
 std_build
