@@ -16,7 +16,7 @@ RUN_DEPS_i686="ncursesw"
 RUN_DEPS_aarch64="ncurses"
 RUN_DEPS_armv7l="ncurses"
 
-BUILD_DEPS="cmake libcap-dev libidn2-dev"
+BUILD_DEPS="meson sed pkg-config libcap-dev libidn2-dev"
 BUILD_DEPS_x86_64="ncursesw-dev"
 BUILD_DEPS_i686="ncursesw-dev"
 BUILD_DEPS_aarch64="ncurses-dev"
@@ -26,9 +26,9 @@ std_build
 top_n_clean
 prep_gh_git
 
-cmake -B _build -S $(pwd)
-cmake --build _build
-sudo DESTDIR=/tmp/$DST cmake --install _build --strip
+meson setup _build -Dbuildtype=release
+meson compile -C _build
+sudo DESTDIR=/tmp/$DST meson install -C _build
 
 mk_tcz
 sudo rm -rf "$DST"
