@@ -18,7 +18,7 @@ top_n_clean
 prep_gh_git
 
 sed -i 's,"/bin/ping","/usr/local/bin/ping",' pinger.c
-meson setup _build
+meson setup _build -Dpingdir=/usr/local/bin
 meson compile -C _build
 DESTDIR=/tmp/$DST meson install -C _build --strip
 
